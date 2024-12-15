@@ -1,0 +1,37 @@
+.home-container {
+    display: flex;
+background-color: #ffffff;
+background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+}
+
+
+/* Left Section */
+.left-section {
+    padding: 1rem; /* Add extra padding for better spacing */
+    margin-right: 4rem; /* Space between sections */
+    border-right: 1px solid #888888; /* Vertical divider */
+    height: 100vh; /* Full viewport height */
+    background-color: #f9f9f9; /* Light gray background */
+    font-family: 'Arial', sans-serif; /* Modern font */
+    box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0; /* Adjust to desired distance from the top */
+    align-self: flex-start; /* Ensures proper alignment with other flex items */
+}
+
+/* General Dashboard Styling */
+.dashboard {
+    padding: 2rem 2rem;
+    margin: 0rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+} 
+
+
+
+
