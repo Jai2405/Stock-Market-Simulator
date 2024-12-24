@@ -3,17 +3,24 @@ import StockPerformance from "./StockPerformace";
 import SPGraph from "./SPGraph";
 import { Box, Container } from "@mui/material";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
     return (
       <Container>
+
         {/* Dashboard summary and performance section */}
-        <Box className="dashboard" display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={2}>
+        <Box className="dashboard" display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={1}>
           <Box className="portfolio-summary">
-            <PortfolioSummary />
+            <PortfolioSummary
+                portfolioValue={props.portfolioValue}
+                investmentValue={props.investmentValue}
+                profitLoss={props.profitLoss}
+             />
           </Box>
 
           <Box className="stock-performance">
-            <StockPerformance />
+            <StockPerformance
+            bestPerformingStocks={props.bestPerformingStocks}
+            worstPerformingStocks={props.worstPerformingStocks} />
           </Box>
         </Box>
 

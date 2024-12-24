@@ -1,30 +1,39 @@
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { useState, useEffect } from 'react';
 import Dashboard from '../Components/Home/Dashboard';
-import TrendingStocks from "../Components/Home/TrendingStocks";
+import usePortfolioData from './PortfolioFetch';
+//import { useData } from './Datafetch';
 import './Home.css';
 
+
 export default function Home() {
+    const {
+        portfolio,
+        portfolioValue,
+        investmentValue,
+        profitLoss,
+        bestPerformingStocks,
+        worstPerformingStocks,
+        loading,
+        error,
+      } = usePortfolioData();
+    
+      if (loading) return <div>Loading...</div>;
+      if (error) return <div>Error: {error}</div>;
+
+  
     return (
-        <>
         <div className='home-container'>
-            <div className="left-section">
-                <div className='search-bar'>
-                    <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off" >
-                        <TextField id="standard-basic" label="Search eg: AAPL, AMD etc " variant="standard" />
-                    </Box>
+            <div className="dashboard-wrapper">
+                <div className="dashboard-section">
+                    <Dashboard 
+                    portfolioValue={portfolioValue}
+                    investmentValue={investmentValue}
+                    profitLoss={profitLoss}
+                    bestPerformingStocks={bestPerformingStocks}
+                    worstPerformingStocks={worstPerformingStocks}
+                    />
                 </div>
-
-                <div className='trending-stocks'>
-                    <TrendingStocks/>
-                </div>
-            </div>
-
-            <div className="right-section">
-                <Dashboard />
             </div>
         </div>
-        </>
     );
 }
-

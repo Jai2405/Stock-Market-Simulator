@@ -6,9 +6,10 @@ body {
   margin: 0;
 }
 
+/* NavBAR */
 .nav {
-  background-color: rgba(238, 234, 234, 0.211);
-  box-shadow: 0 1px #888888 ;
+  background-color: rgba(221, 221, 221, 0.211);
+  box-shadow: 0 1px #ffffff ;
   color: black;
   display: flex;
   justify-content: space-between;
@@ -60,3 +61,7 @@ nav ul {
   color: black;
 }
 
+
+.page-layout {
+  display: flex;
+}

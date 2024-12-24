@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Stack } from "@mui/material";
 
-export default function StockPerformance() {
+export default function StockPerformance(props) {
   const bestPerformingStocks = [
     { symbol: "AAPL", performance: "+5.2%" },
     { symbol: "MSFT", performance: "+4.8%" },
@@ -25,7 +25,7 @@ export default function StockPerformance() {
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
         flexWrap: "wrap",
         padding: '1rem',
-        marginBottom: '1rem'
+  
         
       }}
     >
@@ -47,7 +47,7 @@ export default function StockPerformance() {
           Best Performing Stocks
         </Typography>
         <Stack spacing={1}>
-          {bestPerformingStocks.map((stock, index) => (
+          {props.bestPerformingStocks.map((stock, index) => (
             <Box
               key={index}
               sx={{
@@ -63,13 +63,13 @@ export default function StockPerformance() {
               }}
             >
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                {stock.symbol}
+                {stock.stock}
               </Typography>
               <Typography
                 variant="body1"
                 sx={{ color: "green", fontWeight: "bold" }}
               >
-                {stock.performance}
+                {stock.change_percentage >=0 ? '+': '-'}{stock.change_percentage.toFixed(1)}%
               </Typography>
             </Box>
           ))}
@@ -94,7 +94,7 @@ export default function StockPerformance() {
           Worst Performing Stocks
         </Typography>
         <Stack spacing={1}>
-          {worstPerformingStocks.map((stock, index) => (
+          {props.worstPerformingStocks.map((stock, index) => (
             <Box
               key={index}
               sx={{
@@ -110,13 +110,13 @@ export default function StockPerformance() {
               }}
             >
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                {stock.symbol}
+              {stock.stock}
               </Typography>
               <Typography
                 variant="body1"
                 sx={{ color: "red", fontWeight: "bold" }}
               >
-                {stock.performance}
+                {stock.change_percentage >=0 ? '+': '-'}{stock.change_percentage.toFixed(1)}%
               </Typography>
             </Box>
           ))}

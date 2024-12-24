@@ -1,44 +1,63 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import '../../pages/Home.css';
 
-const metrics = [
-  { title: 'Total Portfolio Value', value: '$12,345', change: '+2.5%', changeType: 'positive' },
-  { title: 'Total Investment', value: '$10,000' },
-  { title: 'Profit/Loss', value: '+$2,345', changeType: 'positive' },
-];
+export default function PortfolioSummary(props) {
+  const metrics = [
+    { 
+      title: 'Total Portfolio Value', 
+      value: props.portfolioValue, 
+      change: (((props.portfolioValue - props.investmentValue) / props.investmentValue) * 100).toFixed(1), 
+      changeType: (((props.portfolioValue - props.investmentValue) / props.investmentValue) * 100).toFixed(1) >= 0 ? 'positive': 'negative' 
+    },
+    { 
+      title: 'Total Investment', 
+      value: props.investmentValue 
+    },
+    { 
+      title: 'Profit/Loss', 
+      value: props.profitLoss, 
+      changeType: 'positive' 
+    },
+  ];
 
-export default function PortfolioSummary() {
   return (
     <Box
       sx={{
-        p: 3,
         display: 'flex',
+        gap: '2rem',
         flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: '5rem', // Spacing between cards
+        paddingBottom : '1.5rem',
+        '& > :not(style)': {
+          m: 1,
+          width: '15rem',
+          height: '7rem',
+        },
       }}
     >
       {metrics.map((metric, index) => (
-        <Box
-          key={index}
+        <Paper 
+          key={index} 
+          elevation={3} 
           sx={{
-            p: 2,
-            minWidth: 200,
-            textAlign: 'center',
-            borderRadius: 2,
-            boxShadow: 3,
-            backgroundColor: '#f9f9f9',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
             transition: 'transform 0.2s',
             '&:hover': {
               transform: 'translateY(-10px)'
             },
+            p: 2
           }}
         >
-          <Typography variant="subtitle1" gutterBottom>
-            {metric.title}
+          <Typography variant="h6" color="textSecondary" gutterBottom>
+            {metric.title} 
           </Typography>
           <Typography variant="h6" fontWeight="bold">
-            {metric.value}
+            ${metric.value}
           </Typography>
           {metric.change && (
             <Typography
@@ -47,12 +66,11 @@ export default function PortfolioSummary() {
                 color: metric.changeType === 'positive' ? 'green' : 'red',
               }}
             >
-              {metric.change}
+              {metric.change > 0 ? '+' : '-'}{metric.change}%
             </Typography>
           )}
-        </Box>
+        </Paper>
       ))}
     </Box>
   );
-};
-
+}

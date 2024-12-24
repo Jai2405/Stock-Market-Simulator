@@ -1,0 +1,112 @@
+.stock-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.header {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding-left: 1rem;
+}
+
+.non-header {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    height: 70vh;
+}
+
+.graph {
+    width: 60%;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.stock-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1.5rem;
+}
+
+.stock-price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.other-details {
+    flex: 1;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    align-items: stretch; /* Ensures child elements stretch to fill the height */
+    justify-content: center; /* Centers the grid container horizontally */
+}
+
+.other-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr; /* Two rows, each taking equal space */
+    grid-template-columns: 1fr 1fr; /* Two columns, each taking equal space */
+    gap: 1rem;
+    width: 100%; /* Ensure it stretches to fill the parent container */
+    height: 100%; /* Ensure it stretches to fill the parent container */
+}
+
+.market-cap, .high, .low, .volume {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: white; /* Light gray for better visuals */
+    font-weight: 600; /* Better text emphasis */
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.detail-card {
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+    border-radius: 8px; /* Rounded corners for a polished look */
+    padding: 1rem; /* Add padding for content */
+    background-color: white; /* Ensure background is consistent */
+}
+
+.detail-card:hover {
+    transform: translateY(-8px); /* Slight upward lift */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+    background-color: #f9f9f9; /* Light gray background for visual feedback */
+}
+
+.label {
+    font-size: 1rem; /* Slightly larger for readability */
+    font-weight: 600; /* Semi-bold for emphasis */
+    color: #666; /* Neutral gray for subtle appearance */
+    margin-bottom: 1rem; /* Add spacing below the label */
+    text-transform: uppercase; /* Make it look more uniform */
+    letter-spacing: 0.05rem; /* Slight spacing for elegance */
+}
+
+.value {
+    font-size: 1.2rem; /* Larger font for focus */
+    font-weight: 600; /* Bold for prominence */
+    color: #222; /* Darker shade for better visibility */
+    margin-top: 0.25rem; /* Add spacing above the value */
+    line-height: 1.2; /* Improve readability */
+}

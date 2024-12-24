@@ -29,7 +29,7 @@ const SPGraph = () => {
     >
       {/* Centered Heading */}
       <h2 className="text-lg font-bold mb-4 text-gray-700">
-        Market Summary
+        Market Overview
       </h2>
 
       {/* Responsive Line Chart */}

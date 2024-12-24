@@ -1,37 +1,55 @@
+
+/* Home Styles */
 .home-container {
     display: flex;
-background-color: #ffffff;
-background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+    width: 100%;
+    min-height: calc(100vh - 4rem); /* Subtract navbar height */
+    background-color: #f4f7f6;
+    background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
-
-/* Left Section */
-.left-section {
-    padding: 1rem; /* Add extra padding for better spacing */
-    margin-right: 4rem; /* Space between sections */
-    border-right: 1px solid #888888; /* Vertical divider */
-    height: 100vh; /* Full viewport height */
-    background-color: #f9f9f9; /* Light gray background */
-    font-family: 'Arial', sans-serif; /* Modern font */
-    box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 0; /* Adjust to desired distance from the top */
-    align-self: flex-start; /* Ensures proper alignment with other flex items */
-}
-
-/* General Dashboard Styling */
-.dashboard {
-    padding: 2rem 2rem;
-    margin: 0rem 4rem;
+.dashboard-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    align-items: center;
-    justify-content: center;
-} 
+}
 
+.dashboard-section {
+    background-color: rgb(244, 244, 244);
+    border-radius: 12px;
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.05), 
+        0 5px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
 
+.dashboard-section:hover {
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.08), 
+        0 5px 15px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+}
 
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 1rem;
+    }
 
+    .dashboard-wrapper {
+        gap: 1rem;
+    }
+
+    .dashboard-section {
+        padding: 1rem;
+    }
+}
