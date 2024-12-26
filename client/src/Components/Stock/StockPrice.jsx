@@ -9,8 +9,6 @@ import {
   ListItemText
 } from '@mui/material';
 import '../../pages/Stock.css';
-import Buy from './Buy';
-
 
 export default function StockPrice(props) {
     return (

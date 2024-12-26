@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Table from '@mui/joy/Table';
 
+
 export default function StockTable(props) {
   const [hoveredRow, setHoveredRow] = useState(null);
 
@@ -21,54 +22,44 @@ export default function StockTable(props) {
         </tr>
       </thead>
       <tbody>
-        {props.portfolio.map((row, index) => {
-          // Handle undefined or null values safely
-          const buyPrice = row.buy_price ?? 0;
-          const currentPrice = row.current_price ?? 0;
-          const changePercent = row.change_percent ?? 0;
-
-          return (
-            <tr
-              key={index}
-              onMouseEnter={() => setHoveredRow(index)}
-              onMouseLeave={() => setHoveredRow(null)}
-              style={{ backgroundColor: hoveredRow === index ? '#f9f9f9' : 'white' }}
-            >
-              <td>{row.stock}</td>
-              <td>{row.quantity}</td>
-              <td>${buyPrice.toFixed(2)}</td>
-              <td>${currentPrice.toFixed(2)}</td>
-              <td style={{ color: (currentPrice - buyPrice) >= 0 ? 'green' : 'red' }}>
-                ${(currentPrice - buyPrice) * row.quantity >= 0
-                  ? ((currentPrice - buyPrice) * row.quantity).toFixed(2)
-                  : 'N/A'}
-              </td>
-              <td>${(buyPrice * row.quantity).toFixed(2)}</td>
-              <td>${(currentPrice * row.quantity).toFixed(2)}</td>
-              <td style={{ color: changePercent >= 0 ? 'green' : 'red' }}>
-                {changePercent.toFixed(2)}%
-              </td>
-              <td>{row.date}</td>
-              <td>
-                {hoveredRow === index && (
-                  <button
-                    style={{
-                      padding: '6px 12px',
-                      backgroundColor: '#d32f2f',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => alert(`Clicked on ${row.stock}`)}
-                  >
-                    Exit
-                  </button>
-                )}
-              </td>
-            </tr>
-          );
-        })}
+        {props.portfolio.map((row, index) => (
+          
+          <tr
+            key={index}
+            onMouseEnter={() => setHoveredRow(index)}
+            onMouseLeave={() => setHoveredRow(null)}
+            style={{ backgroundColor: hoveredRow === index ? '#f9f9f9' : 'white' }}
+          >
+            <td>{row.stock}</td>
+            <td>{row.quantity}</td>
+            <td>${row.buy_price.toFixed(2)}</td>
+            <td>${row.current_price.toFixed(2)}</td>
+            <td style={{ color: row.changes_percentage >= 0 ? 'green' : 'red' }}>
+              ${((row.current_price - row.buy_price) *  row.quantity).toFixed(2)}
+            </td>
+            <td>${(row.buy_price * row.quantity).toFixed(2)}</td>
+            <td>${(row.current_price * row.quantity).toFixed(2)}</td>
+            <td style={{ color: row.changes_percentage >= 0 ? 'green' : 'red' }}>{row.changes_percentage.toFixed(2)}%</td>
+            <td>{row.date}</td>
+            <td>
+              {hoveredRow === index && (
+                <button
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: '#d32f2f',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => alert(`Clicked on ${row.name}`)}
+                >
+                  Exit
+                </button>
+              )}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );

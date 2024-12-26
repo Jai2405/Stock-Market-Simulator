@@ -11,8 +11,6 @@ export default function Portfolio() {
     const {portfolio} = usePortfolioData();
 
     
-    //console.log("THIS IS IT", portfolio);
-    
     return (
         <div className="portfolio-container">
             <div className="portfolio-header">

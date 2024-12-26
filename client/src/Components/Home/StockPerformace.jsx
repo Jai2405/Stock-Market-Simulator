@@ -69,7 +69,7 @@ export default function StockPerformance(props) {
                 variant="body1"
                 sx={{ color: "green", fontWeight: "bold" }}
               >
-                {stock.change_percentage >=0 ? '+': '-'}{stock.change_percentage.toFixed(1)}%
+                {stock.change_percentage >=0 ? '+': ''}{stock.change_percentage.toFixed(1)}%
               </Typography>
             </Box>
           ))}
@@ -116,7 +116,7 @@ export default function StockPerformance(props) {
                 variant="body1"
                 sx={{ color: "red", fontWeight: "bold" }}
               >
-                {stock.change_percentage >=0 ? '+': '-'}{stock.change_percentage.toFixed(1)}%
+                {stock.change_percentage >=0 ? '+': ''}{stock.change_percentage.toFixed(1)}%
               </Typography>
             </Box>
           ))}

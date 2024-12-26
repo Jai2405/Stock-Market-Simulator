@@ -4,13 +4,21 @@ import axios from 'axios';
 export default function usePortfolioData() {
   const [portfolio, setPortfolio] = useState([]);
   const [portfolioWithPrices, setPortfolioWithPrices] = useState([]);
+  const [investmentValue, setInvestmentValue] = useState(0);
+  const [portfolioValue, setPortfolioValue] = useState(0);
+  const [profitLoss, setProfitLoss] = useState(0);
+  const[bestPerformingStocks, setBestPerformingStocks] = useState([]);
+  const[worstPerformingStocks, setWorstPerformingStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const apiKeyFMP1 = 'qVMbGCVEwhc1WF9wuttj8nYrCgOsLST6';
   const apiKeyFMP2 = 'Y52DRqukXpCtsfjrkQ8YJSbJ1iN96DIq';
+  const apiKeyFMP3 = 'Lqjvy5s6JR1OUaav2V9YK0QSXTTTUwBx';
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
+      let tempInvestmentValue = 0;
+      let tempPortfolioValue = 0;
       try {
         // Fetch the portfolio data
         const response = await axios.get('http://localhost:3000/portfolio'); // Replace with your API endpoint
@@ -25,6 +33,9 @@ export default function usePortfolioData() {
               );
               const priceData = priceResponse.data[0]; // Access the first object in the array
               const currentPrice = priceData.price;
+
+              tempPortfolioValue += currentPrice * stock.quantity;
+              tempInvestmentValue += stock.buy_price * stock.quantity;
   
               // Calculate percentage change
               const changesPercentage = (
@@ -45,16 +56,44 @@ export default function usePortfolioData() {
             }
           })
         );
-  
+
+        setInvestmentValue(tempInvestmentValue.toFixed(2));
+        setPortfolioValue(tempPortfolioValue.toFixed(2));
+        setProfitLoss((tempPortfolioValue - tempInvestmentValue).toFixed(2));
         setPortfolio(portfolioData);
         setPortfolioWithPrices(updatedPortfolio);
         setLoading(false);
+
+      // Compute Best and Worst Performing Stocks
+      const sortedByPerformance = updatedPortfolio
+        .filter(stock => stock.changes_percentage !== null)
+        .sort((a, b) => b.changes_percentage - a.changes_percentage);
+
+      const tempBestPerformingStocks2 = sortedByPerformance.slice(0, 3).map((stock) => ({
+        stock: stock.stock,
+        change_percentage: stock.changes_percentage,
+      }));
+
+      const tempWorstPerformingStocks2 = sortedByPerformance.slice(-3).map((stock) => ({
+        stock: stock.stock,
+        change_percentage: stock.changes_percentage,
+      }));
+
+      setBestPerformingStocks(tempBestPerformingStocks2);
+      setWorstPerformingStocks(tempWorstPerformingStocks2);
+
       } catch (err) {
         console.error('Error fetching portfolio data:', err);
         setError(err);
         setLoading(false);
       }
     };
+
+
+    
+  
+
+
   
     fetchPortfolioData();
   }, []);
@@ -66,7 +105,7 @@ export default function usePortfolioData() {
   let demoInvestmentValue = 0;
   let demoPortfolioValue = 0;
   let demoProfitLoss = 0;
-  let demoLoading = true;
+  let demoLoading = false;
   let demoError = false;
 
   demoPortfolio = [
@@ -132,24 +171,23 @@ export default function usePortfolioData() {
     }
   ];
 
-  for (const stock of demoPortfolio) {
-    demoInvestmentValue += stock.buy_price * stock.quantity;
-    demoPortfolioValue += stock.current_price * stock.quantity;
-  }
+
   demoBestPerformingStocks = [{stock: 'AAPL', change_percentage: 4.5}, {stock: 'AAPL', change_percentage: 4.5}, {stock: 'AAPL', change_percentage: 4.5}]
   demoWorstPerformingStocks = [{stock: 'AAPL', change_percentage: 4.5}, {stock: 'AAPL', change_percentage: 4.5}, {stock: 'AAPL', change_percentage: 4.5}]
 
-  console.log("DEMO ", demoPortfolio);
-  console.log("REAL ", portfolio);
+
+
 
   return {
-    portfolio: demoPortfolio,
-    investmentValue: demoInvestmentValue,
-    portfolioValue: demoPortfolioValue,
-    profitLoss: demoPortfolioValue - demoInvestmentValue,
-    bestPerformingStocks: demoBestPerformingStocks,
-    worstPerformingStocks: demoWorstPerformingStocks,
+    portfolio: portfolioWithPrices,
+    investmentValue: investmentValue,
+    portfolioValue: portfolioValue,
+    profitLoss: profitLoss,
+    bestPerformingStocks: bestPerformingStocks,
+    worstPerformingStocks: worstPerformingStocks,
     error: demoError,
     loading: demoLoading
   };
 }
+
+
