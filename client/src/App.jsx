@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Portfolio from './pages/Portfolio'
 import Stock from './pages/Stock';
 import axios from 'axios';
+import Register from './pages/Register';
+import Login from './pages/Login';
 import './App.css'
 
 
@@ -14,6 +16,8 @@ export default function App() {
         <MainLayout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/stock/:symbol" element={<Stock />} />
           </Routes>

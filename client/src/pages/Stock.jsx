@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import StockDataFetch from './StockDataFetch';
 import { 
@@ -15,7 +16,6 @@ import './Stock.css';
 export default function Stock() {
   const [stockData, setStockData] = useState(null); // Start with null for loading state
   const { symbol } = useParams(); // Capture the dynamic segment
-  console.log(symbol);
 
   // Fetch stock data on component mount
   useEffect(() => {
@@ -49,6 +49,39 @@ export default function Stock() {
     marketCap = 0,
   } = stockData;
 
+    const handleBuy = async (shares) => {
+    try {
+      const response = await axios.post('http://localhost:3000/buy', {
+        symbol: stockData.symbol,
+        price: stockData.currentPrice,
+        shares,
+        action: 'buy',
+      });
+      console.log('Buy Response:', response.data);
+      const shareText = shares == 1? ' share' : ' shares';
+      const message = "Bought " + shares + shareText + " of " + stockData.symbol + " at $" + stockData.currentPrice;
+      alert(message);
+    } catch (error) {
+      console.error('Error buying shares:', error);
+    }
+  };
+
+  const handleSell = async (shares) => {
+    try {
+      const response = await axios.post('http://localhost:3000/sell', {
+        symbol: stockData.symbol,
+        price: stockData.currentPrice,
+        shares,
+        action: 'sell',
+      });
+      console.log('Sell Response:', response.data);
+      const shareText = shares == 1? ' share' : ' shares';
+      const message = "Sold " + shares + shareText + " of " + stockData.symbol + " at $" + stockData.currentPrice;
+      alert(message);
+    } catch (error) {
+      console.error('Error selling shares:', error);
+    }
+  };
   const isPositive = change >= 0;
 
   return (
@@ -75,8 +108,8 @@ export default function Stock() {
             <StockTradeButtons 
               stockPrice={stockData.currentPrice}
               stockSymbol={stockData.symbol}
-              onBuy={(shares) => console.log('Buying', shares, 'shares')}
-              onSell={(shares) => console.log('Selling', shares, 'shares')}/>
+              onBuy={handleBuy}
+              onSell={handleSell}/>
           </div>
         </Box>
       </div>
@@ -118,3 +151,6 @@ export default function Stock() {
     </div>
   );
 }
+
+
+
