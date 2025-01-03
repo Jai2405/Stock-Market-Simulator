@@ -50,6 +50,14 @@ export default function Stock() {
   } = stockData;
 
     const handleBuy = async (shares) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+          console.log("not logged in");
+        } else {
+            console.log('userid is , ', userId);
+        }
+        
+
     try {
       const response = await axios.post('http://localhost:3000/buy', {
         symbol: stockData.symbol,

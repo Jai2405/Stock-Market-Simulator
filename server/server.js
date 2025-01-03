@@ -157,14 +157,14 @@ app.post("/login", (req, res, next) => {
 // });
 
 app.post("/buy", async (req, res) => {
-  const { userId, symbol, price, shares, action } = req.body;
+  const {symbol, price, shares, action } = req.body;
   const date = getTodaysDate();
 
   // Validate all required fields
-  if (!userId || !symbol || !price || !shares || !action) {
+  if (!symbol || !price || !shares || !action) {
     return res.status(400).send({ 
       error: 'Invalid request data', 
-      details: 'All fields (userId, symbol, price, shares, action) are required' 
+      details: 'All fields (symbol, price, shares, action) are required' 
     });
   }
 
@@ -173,14 +173,13 @@ app.post("/buy", async (req, res) => {
     const portfolioId = Math.floor(Math.random() * 100000); // Example generation
 
     const query = `
-      INSERT INTO portfolios (portfolio_id, user_id, stock, quantity, buy_price, date)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO portfolios (user_id, stock, quantity, buy_price, date)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `;
     
     const result = await db.query(query, [
-      portfolioId,    // Generated portfolio_id instead of hardcoded 16373
-      userId,         // Use the userId from request instead of hardcoded 15
+      22,
       symbol, 
       shares, 
       price, 

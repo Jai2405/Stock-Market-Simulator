@@ -25,8 +25,7 @@ export default function Login() {
       const response = await axios.post('http://localhost:3000/login', formData);
 
       if (response.status === 200) {
-        // Assuming the response contains a token or user session
-        //localStorage.setItem('token', response.data.token); // Save token if needed
+        localStorage.setItem('userId', response.data.userId);
         navigate('/'); // Redirect to home page on successful login
       }
       navigate('/');
