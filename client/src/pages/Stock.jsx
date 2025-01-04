@@ -57,37 +57,45 @@ export default function Stock() {
             console.log('userid is , ', userId);
         }
         
-
-    try {
-      const response = await axios.post('http://localhost:3000/buy', {
-        symbol: stockData.symbol,
-        price: stockData.currentPrice,
-        shares,
-        action: 'buy',
-      });
-      console.log('Buy Response:', response.data);
-      const shareText = shares == 1? ' share' : ' shares';
-      const message = "Bought " + shares + shareText + " of " + stockData.symbol + " at $" + stockData.currentPrice;
-      alert(message);
-    } catch (error) {
-      console.error('Error buying shares:', error);
-    }
+        try {
+            const response = await axios.post('http://localhost:3000/buy', {
+              userId,
+              symbol: stockData.symbol,
+              price: stockData.currentPrice,
+              shares,
+              action: 'buy',
+            });
+            console.log('Buy Response:', response.data);
+            const shareText = shares === 1 ? ' share' : ' shares';
+            alert(`Bought ${shares}${shareText} of ${stockData.symbol} at $${stockData.currentPrice}`);
+          } catch (error) {
+            console.error('Error buying shares:', error);
+            alert('Failed to buy shares. Please try again.');
+          }
   };
 
   const handleSell = async (shares) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+          console.log("not logged in");
+        } else {
+            console.log('userid is , ', userId);
+        }
+  
     try {
       const response = await axios.post('http://localhost:3000/sell', {
+        userId,
         symbol: stockData.symbol,
         price: stockData.currentPrice,
         shares,
         action: 'sell',
       });
       console.log('Sell Response:', response.data);
-      const shareText = shares == 1? ' share' : ' shares';
-      const message = "Sold " + shares + shareText + " of " + stockData.symbol + " at $" + stockData.currentPrice;
-      alert(message);
+      const shareText = shares === 1 ? ' share' : ' shares';
+      alert(`Sold ${shares}${shareText} of ${stockData.symbol} at $${stockData.currentPrice}`);
     } catch (error) {
       console.error('Error selling shares:', error);
+      alert('Failed to sell shares. Please try again.');
     }
   };
   const isPositive = change >= 0;

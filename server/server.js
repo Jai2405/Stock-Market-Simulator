@@ -41,10 +41,10 @@ app.use(passport.session());
 
 
 const db = new pg.Client({
-  user:"postgres",//process.env.PG_USER,
-  host:"localhost",// process.env.PG_HOST,
-  database: "stockproject",//process.env.PG_DATABASE,
-  password:"postgresjai",// process.env.PG_PASSWORD,
+  user:process.env.PG_USER,//process.env.PG_USER,
+  host:process.env.PG_HOST,// process.env.PG_HOST,
+  database: process.env.PG_DATABASE,//process.env.PG_DATABASE,
+  password:process.env.PG_PASSWORD,// process.env.PG_PASSWORD,
   port: process.env.PG_PORT,
 });
 
@@ -84,6 +84,17 @@ app.get("/portfolio", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch portfolios" });
   }
  });
+
+ app.get("/portfolio/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const result = await db.query("SELECT * FROM portfolios WHERE user_id = $1", [userId]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching portfolios:", error);
+    res.status(500).json({ error: "Failed to fetch portfolios" });
+  }
+});
 
 
 app.post("/register", async (req, res) => {
@@ -133,32 +144,11 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-
-//  app.post("/buy", async (req, res) => {
-//   const { symbol, price, shares, action } = req.body;
-//   const date = getTodaysDate()
-//   if (!symbol || !price || !shares || !action) {
-//     return res.status(400).send({ error: 'Invalid request data' });
-//   }
-
-//   try {
-//     const query = `
-//       INSERT INTO portfolios (portfolio_id, user_id, stock, quantity, buy_price, date)
-//       VALUES ($1, $2, $3, $4, $5, $6)
-//       RETURNING *;
-//     `;
-//     const result = await db.query(query, [16373,15, symbol, shares, price, date]);
-
-//     res.status(200).send({ message: 'Trade successful', trade: result.rows[0] });
-//   } catch (error) {
-//     console.error("Error saving trade:", error);
-//     res.status(500).send({ error: 'Failed to save trade' });
-//   }
-// });
-
 app.post("/buy", async (req, res) => {
-  const {symbol, price, shares, action } = req.body;
+  const {userId, symbol, price, shares, action } = req.body;
   const date = getTodaysDate();
+
+  console.log("AND THE ID IS", userId);
 
   // Validate all required fields
   if (!symbol || !price || !shares || !action) {
@@ -179,7 +169,7 @@ app.post("/buy", async (req, res) => {
     `;
     
     const result = await db.query(query, [
-      22,
+      userId,
       symbol, 
       shares, 
       price, 
@@ -207,20 +197,40 @@ app.post("/buy", async (req, res) => {
   }
 });
 
+// server.js - Updated sell endpoint
 app.post("/sell", async (req, res) => {
-  const { symbol, price, shares, action } = req.body;
-  if (!symbol || !price || !shares || !action) {
+  const { userId, symbol, price, shares, action } = req.body;
+  if (!userId || !symbol || !price || !shares || !action) {
     return res.status(400).send({ error: 'Invalid request data' });
   }
+
   try {
-    const result1 = await db.query("SELECT quantity FROM portfolios WHERE stock = $1", [symbol]);
-    const ownedShares = result1.rows[0].quantity;
-    if ((ownedShares - shares) > 0) {
-      const result = await db.query("UPDATE portfolios SET quantity = $1 WHERE stock = $2", [ownedShares - shares, symbol]);
-    } else {
-      const result = await db.query("DELETE FROM portfolios WHERE stock = $1", [symbol]);
+    const result1 = await db.query(
+      "SELECT quantity FROM portfolios WHERE stock = $1 AND user_id = $2",
+      [symbol, userId]
+    );
+    
+    if (result1.rows.length === 0) {
+      return res.status(404).send({ error: 'Stock not found in portfolio' });
     }
-    res.status(200).send({ message: 'Trade successful'});
+
+    const ownedShares = result1.rows[0].quantity;
+    if (shares > ownedShares) {
+      return res.status(400).send({ error: 'Not enough shares' });
+    }
+
+    if ((ownedShares - shares) > 0) {
+      await db.query(
+        "UPDATE portfolios SET quantity = $1 WHERE stock = $2 AND user_id = $3",
+        [ownedShares - shares, symbol, userId]
+      );
+    } else {
+      await db.query(
+        "DELETE FROM portfolios WHERE stock = $1 AND user_id = $2",
+        [symbol, userId]
+      );
+    }
+    res.status(200).send({ message: 'Trade successful' });
   } catch (error) {
     console.error("Error saving trade:", error);
     res.status(500).send({ error: 'Failed to save trade' });

@@ -2,25 +2,33 @@ import React, { useState } from 'react';
 import Table from '@mui/joy/Table';
 import axios from 'axios';
 
+
 export default function StockTable(props) {
   const [hoveredRow, setHoveredRow] = useState(null);
 
-  const handleExit = async (stockSymbol, quantity, currentPrice) => {
-    try {
-      const response = await axios.post('http://localhost:3000/sell', {
-        symbol: stockSymbol,
-        price: currentPrice,
-        shares: quantity,
-        action: 'sell',
-      });
-      console.log('Exit Response:', response.data);
-  
-      // Refresh the page to reflect changes
-      window.location.reload();
-    } catch (error) {
-      console.error('Error exiting position:', error);
-    }
-  };
+// Client-side handleExit function
+const handleExit = async (stockSymbol, quantity, currentPrice) => {
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+    alert('Please login first');
+    return;
+  }
+
+  try {
+    const response = await axios.post('http://localhost:3000/sell', {
+      userId,
+      symbol: stockSymbol,
+      price: currentPrice,
+      shares: quantity,
+      action: 'sell',
+    });
+    console.log('Exit Response:', response.data);
+    window.location.reload();
+  } catch (error) {
+    console.error('Error exiting position:', error);
+    alert(error.response?.data?.error || 'Failed to sell shares');
+  }
+};
 
   return (
     <Table>
