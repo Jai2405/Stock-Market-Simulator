@@ -6,14 +6,14 @@ Full-stack web application for tracking stock investments and managing portfolio
 ---
 
 ## App Screenshots
-### Login Page
-![Login Page](./screenschots/home.png)
+### Home Page
+![Home Page](./screenschots/home.png)
 
 ### Portfolio Page
-![Portfolio Page](./images/portfolio-page.png)
+![Portfolio Page](./images/portfolio.png)
 
-### Stock Details
-![Stock Details](./images/stock-details.png)
+### Stock Info Page
+![Stock Details](./images/stock.png)
 
 ---
 
