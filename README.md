@@ -23,12 +23,16 @@ Full-stack web application for tracking stock investments and managing portfolio
 * Buy/sell stock functionality
 * Portfolio performance and distribution visualization
 
-# Tech Stack
-* Frontend: React, Material-UI
-* Backend: Express.js, Node.js
-* Database: PostgreSQL
-* Authentication: Passport.js
-* API: Financial Modeling Prep
+---
+
+## Tech Stack
+* **Frontend**: React, Material-UI
+* **Backend**: Express.js, Node.js
+* **Database**: PostgreSQL
+* **Authentication**: Passport.js
+* **API**: Financial Modeling Prep
+
+---
 
 # Database Setup
 ```sql
