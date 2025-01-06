@@ -10,10 +10,10 @@ Full-stack web application for tracking stock investments and managing portfolio
 ![Home Page](https://github.com/Jai2405/Stock-Market-Simulator/blob/main/screenshots/home.png)
 
 ### Portfolio Page
-![Portfolio Page](./images/portfolio.png)
+![Portfolio Page](https://github.com/Jai2405/Stock-Market-Simulator/blob/main/screenshots/portfolio.png)
 
 ### Stock Info Page
-![Stock Details](./images/stock.png)
+![Stock Details]([./images/stock.png](https://github.com/Jai2405/Stock-Market-Simulator/blob/main/screenshots/stock.png))
 
 ---
 
