@@ -3,6 +3,20 @@
 # Description
 Full-stack web application for tracking stock investments and managing portfolios.
 
+---
+
+## App Screenshots
+### Login Page
+![Login Page](./screenschots/home.png)
+
+### Portfolio Page
+![Portfolio Page](./images/portfolio-page.png)
+
+### Stock Details
+![Stock Details](./images/stock-details.png)
+
+---
+
 # Features
 * Real-time stock price tracking via Financial Modeling Prep API
 * User authentication and personalized portfolios
