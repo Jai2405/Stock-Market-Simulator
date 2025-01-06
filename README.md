@@ -1,25 +1,22 @@
-# Stock Portfolio Tracker
+# Bull&Bear: A Stock Portfolio Simulator
 
+# Description
 Full-stack web application for tracking stock investments and managing portfolios.
 
-## Features
+# Features
+* Real-time stock price tracking via Financial Modeling Prep API
+* User authentication and personalized portfolios
+* Buy/sell stock functionality
+* Portfolio performance and distribution visualization
 
-- Real-time stock price tracking via Financial Modeling Prep API
-- User authentication and personalized portfolios
-- Buy/sell stock functionality
-- Portfolio performance analytics
-- Investment distribution visualization
+# Tech Stack
+* Frontend: React, Material-UI
+* Backend: Express.js, Node.js
+* Database: PostgreSQL
+* Authentication: Passport.js
+* API: Financial Modeling Prep
 
-## Tech Stack
-
-- Frontend: React, Material-UI
-- Backend: Express.js, Node.js
-- Database: PostgreSQL
-- Authentication: Passport.js
-- API: Financial Modeling Prep
-
-## Database Setup
-
+# Database Setup
 ```sql
 CREATE DATABASE stockproject;
 
@@ -39,8 +36,7 @@ CREATE TABLE portfolios (
 );
 ```
 
-## Installation
-
+# Installation
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/stock-portfolio-tracker.git
@@ -78,8 +74,24 @@ npm start
 npm run dev
 ```
 
-## API Endpoints
+# API Endpoints
+* POST /register - User registration
+* POST /login - User authentication 
+* GET /portfolio/:userId - Get user's portfolio
+* POST /buy - Purchase stocks
+* POST /sell - Sell stocks
 
-- `POST /register` - User registration
-- `POST /login` - User authentication
-- `GET /portfolio/:
+# Future Improvements
+* Portfolio diversification analysis
+* Historical performance tracking
+* Mobile responsiveness improvements
+
+# Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+# License
+MIT License
